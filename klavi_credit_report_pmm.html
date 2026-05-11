@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Klavi Credit Report — Guia Comercial PMM</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f6f8;color:#1a1a2e;font-size:14px}
+.pmm-wrap{display:flex;min-height:100vh}
+.pmm-sidebar{width:230px;min-width:230px;background:#fff;border-right:1px solid #e8eaed;padding:1rem 0;position:sticky;top:0;height:100vh;overflow-y:auto}
+.pmm-logo{padding:0 1rem 1rem;border-bottom:1px solid #e8eaed;margin-bottom:.75rem}
+.pmm-logo-inner{display:flex;align-items:center;gap:8px}
+.pmm-logo-box{width:30px;height:30px;background:#1457a8;border-radius:7px;display:flex;align-items:center;justify-content:center}
+.pmm-logo-box span{color:#fff;font-size:13px;font-weight:600}
+.pmm-logo-title{font-size:13px;font-weight:600;color:#1a1a2e}
+.pmm-logo-sub{font-size:11px;color:#6b7280}
+.nav-label{padding:.35rem 1rem;font-size:10px;font-weight:600;letter-spacing:.08em;color:#9ca3af;text-transform:uppercase;margin-top:.5rem}
+.nav-item{display:flex;align-items:center;gap:8px;padding:.45rem 1rem;cursor:pointer;font-size:13px;color:#4b5563;border-left:2px solid transparent;transition:all .15s}
+.nav-item:hover{background:#f9fafb;color:#1a1a2e}
+.nav-item.active{background:#eff6ff;color:#1457a8;border-left-color:#1457a8;font-weight:600}
+.nav-item i{font-size:15px}
+.pmm-content{flex:1;padding:2rem 2.5rem;max-width:900px}
+.section{display:none}
+.section.active{display:block}
+.section-tag{display:inline-block;background:#eff6ff;color:#1457a8;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;margin-bottom:.5rem}
+.section-title{font-size:22px;font-weight:600;color:#1a1a2e;margin-bottom:.3rem}
+.section-desc{font-size:14px;color:#6b7280;line-height:1.6;margin-bottom:1.5rem}
+.card{background:#fff;border:1px solid #e8eaed;border-radius:12px;padding:1.25rem;margin-bottom:1rem}
+.card-title{font-size:14px;font-weight:600;color:#1a1a2e;margin-bottom:.75rem}
+.card-sub{font-size:12px;color:#6b7280}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+.metric-card{background:#f9fafb;border-radius:8px;padding:1rem}
+.metric-val{font-size:22px;font-weight:700;color:#1a1a2e}
+.metric-label{font-size:12px;color:#6b7280;margin-bottom:4px}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
+.badge-blue{background:#eff6ff;color:#1457a8}
+.badge-green{background:#f0fdf4;color:#166534}
+.badge-red{background:#fef2f2;color:#991b1b}
+.badge-warn{background:#fffbeb;color:#92400e}
+.item-row{display:flex;align-items:flex-start;gap:10px;padding:.6rem 0;border-bottom:1px solid #f3f4f6}
+.item-row:last-child{border-bottom:none}
+.item-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.icon-blue{background:#eff6ff}.icon-green{background:#f0fdf4}.icon-red{background:#fef2f2}.icon-warn{background:#fffbeb}
+.item-text{flex:1;font-size:13px;color:#1a1a2e;line-height:1.5}
+.item-text small{color:#6b7280;display:block;font-size:12px;margin-top:2px}
+.comp-table{width:100%;border-collapse:collapse;font-size:12px}
+.comp-table th{text-align:left;padding:.6rem .75rem;background:#f9fafb;font-weight:600;font-size:11px;color:#6b7280;border-bottom:1px solid #e8eaed}
+.comp-table td{padding:.6rem .75rem;border-bottom:1px solid #f3f4f6;color:#1a1a2e;vertical-align:top}
+.comp-table tr:last-child td{border-bottom:none}
+.comp-table .klavi-col{background:#f0f7ff}
+.check{color:#16a34a;font-weight:600}.cross{color:#dc2626}.partial{color:#d97706}
+.swot-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.swot-card{border-radius:12px;padding:1rem}
+.swot-s{background:#f0fdf4}.swot-w{background:#fffbeb}.swot-o{background:#eff6ff}.swot-t{background:#fef2f2}
+.swot-title{font-size:13px;font-weight:700;margin-bottom:.5rem}
+.swot-s .swot-title{color:#166534}.swot-w .swot-title{color:#92400e}.swot-o .swot-title{color:#1457a8}.swot-t .swot-title{color:#991b1b}
+.swot-list{list-style:none}
+.swot-list li{font-size:12px;padding:3px 0;color:#374151;display:flex;align-items:flex-start;gap:6px;line-height:1.5}
+.swot-list li::before{content:'•';flex-shrink:0}
+.access-card{border:1px solid #e8eaed;border-radius:12px;padding:1.25rem;background:#fff}
+.access-card.featured{border:2px solid #1457a8}
+.access-num{width:32px;height:32px;border-radius:50%;background:#1457a8;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;margin-bottom:.75rem}
+.access-title{font-size:14px;font-weight:600;color:#1a1a2e;margin-bottom:.4rem}
+.access-desc{font-size:12px;color:#6b7280;line-height:1.6;margin-bottom:.75rem}
+.tag-list{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:11px;padding:2px 8px;background:#f3f4f6;border:1px solid #e5e7eb;border-radius:20px;color:#4b5563}
+.persona-card{border:1px solid #e8eaed;border-radius:12px;padding:1.25rem;background:#fff}
+.persona-avatar{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;margin-bottom:.75rem}
+.persona-name{font-size:14px;font-weight:600;color:#1a1a2e}
+.persona-role{font-size:12px;color:#6b7280;margin-bottom:.75rem}
+.persona-sec{font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.07em;margin:.6rem 0 .2rem}
+.persona-item{font-size:12px;color:#374151;padding:2px 0}
+.pitch-box{background:#1457a8;border-radius:12px;padding:1.5rem;color:#fff;margin-bottom:1rem}
+.pitch-box h3{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.65;margin-bottom:.5rem}
+.pitch-box p{font-size:15px;line-height:1.7}
+.qa-item{border-bottom:1px solid #f3f4f6;padding:.85rem 0}
+.qa-item:last-child{border-bottom:none}
+.qa-q{font-size:13px;font-weight:600;color:#1a1a2e;display:flex;align-items:flex-start;gap:8px;margin-bottom:.4rem}
+.qa-a{font-size:13px;color:#4b5563;line-height:1.65;padding-left:28px}
+.roadmap-track{position:relative;padding-left:1.5rem}
+.roadmap-track::before{content:'';position:absolute;left:6px;top:8px;bottom:8px;width:1px;background:#e5e7eb}
+.roadmap-item{position:relative;margin-bottom:1.25rem}
+.roadmap-dot{position:absolute;left:-1.5rem;top:4px;width:13px;height:13px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px #e5e7eb}
+.dot-done{background:#1457a8}.dot-next{background:#f59e0b}.dot-future{background:#d1d5db}
+.roadmap-phase{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#9ca3af}
+.roadmap-feat{font-size:13px;font-weight:600;color:#1a1a2e;margin:2px 0}
+.roadmap-desc{font-size:12px;color:#6b7280;line-height:1.5}
+.diff-row{display:grid;grid-template-columns:1fr auto 1fr;gap:1rem;align-items:center;padding:.7rem 0;border-bottom:1px solid #f3f4f6}
+.diff-row:last-child{border-bottom:none}
+.diff-bureau{font-size:12px;color:#dc2626;text-align:right}
+.diff-klavi{font-size:12px;color:#16a34a}
+.diff-label{text-align:center;font-size:11px;font-weight:600;color:#6b7280;background:#f3f4f6;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.seg-card{border:1px solid #e8eaed;border-radius:12px;padding:1rem;background:#fff}
+.seg-name{font-size:13px;font-weight:600;color:#1a1a2e;margin-bottom:4px}
+.seg-why{font-size:12px;color:#6b7280;line-height:1.5}
+.camp-card{border:1px solid #e8eaed;border-radius:12px;padding:1rem;background:#fff}
+.camp-phase{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#9ca3af}
+.camp-name{font-size:13px;font-weight:600;color:#1a1a2e;margin:3px 0}
+.camp-tactics{font-size:12px;color:#6b7280;line-height:1.6}
+.highlight-box{text-align:center;padding:1rem;background:#f9fafb;border-radius:10px}
+.hl-text{font-size:17px;font-weight:600;color:#1a1a2e;margin-bottom:.4rem}
+.hl-sub{font-size:12px;color:#6b7280}
+@media(max-width:700px){.grid-2,.grid-3,.swot-grid{grid-template-columns:1fr}.pmm-sidebar{display:none}.pmm-content{padding:1rem}}
+</style>
+</head>
+<body>
+<div class="pmm-wrap">
+<aside class="pmm-sidebar">
+  <div class="pmm-logo">
+    <div class="pmm-logo-inner">
+      <div class="pmm-logo-box"><span>K</span></div>
+      <div><div class="pmm-logo-title">Credit Report</div><div class="pmm-logo-sub">Guia Comercial PMM</div></div>
+    </div>
+  </div>
+  <div class="nav-label">Produto</div>
+  <div class="nav-item active" onclick="show('oque',this)"><i class="ti ti-info-circle"></i> O que é</div>
+  <div class="nav-item" onclick="show('problema',this)"><i class="ti ti-target"></i> Problema vs Solução</div>
+  <div class="nav-item" onclick="show('perguntas',this)"><i class="ti ti-help-circle"></i> Perguntas do produto</div>
+  <div class="nav-item" onclick="show('oferta',this)"><i class="ti ti-stack"></i> Oferta e acesso</div>
+  <div class="nav-label">Mercado</div>
+  <div class="nav-item" onclick="show('concorrencia',this)"><i class="ti ti-chart-bar"></i> Concorrência</div>
+  <div class="nav-item" onclick="show('diferenciacao',this)"><i class="ti ti-sparkles"></i> Diferenciação</div>
+  <div class="nav-item" onclick="show('swot',this)"><i class="ti ti-layout-grid"></i> SWOT</div>
+  <div class="nav-item" onclick="show('segmentos',this)"><i class="ti ti-users"></i> Segmentos</div>
+  <div class="nav-item" onclick="show('persona',this)"><i class="ti ti-user-circle"></i> Persona</div>
+  <div class="nav-label">Comercial</div>
+  <div class="nav-item" onclick="show('pitch',this)"><i class="ti ti-speakerphone"></i> Pitch de venda</div>
+  <div class="nav-item" onclick="show('campanha',this)"><i class="ti ti-rocket"></i> Campanha GTM</div>
+  <div class="nav-item" onclick="show('roadmap',this)"><i class="ti ti-map"></i> Roadmap evolutivo</div>
+  <div class="nav-item" onclick="show('qa',this)"><i class="ti ti-message-2"></i> Objeções &amp; Q&amp;A</div>
+</aside>
+<main class="pmm-content">
+
+<!-- ===== O QUE É ===== -->
+<div class="section active" id="s-oque">
+  <div class="section-tag">Visão do produto</div>
+  <h1 class="section-title">O que é o Klavi Credit Report?</h1>
+  <p class="section-desc">Um relatório de crédito completo e em tempo real, alimentado por dados de Open Finance — não por histórico negativo, mas por comportamento financeiro real e consentido.</p>
+  <div class="card">
+    <div class="card-title">Definição do produto</div>
+    <div class="item-row"><div class="item-icon icon-blue"><i class="ti ti-file-analytics" style="font-size:15px;color:#1457a8"></i></div><div class="item-text"><strong>Credit Report</strong> é um dossiê financeiro individual que consolida score, movimentação bancária, perfil de gastos, capacidade financeira e dados cadastrais em uma visão única — gerada a partir dos dados de Open Finance do próprio cliente, com seu consentimento.</div></div>
+    <div class="item-row"><div class="item-icon icon-green"><i class="ti ti-database" style="font-size:15px;color:#16a34a"></i></div><div class="item-text"><strong>Fonte diferenciada:</strong> Dados de transações bancárias em tempo real via Open Finance (Banco Central do Brasil), não apenas histórico de inadimplência de bureaus tradicionais.</div></div>
+    <div class="item-row"><div class="item-icon icon-warn"><i class="ti ti-shield-check" style="font-size:15px;color:#d97706"></i></div><div class="item-text"><strong>LGPD-compliant:</strong> Todo acesso aos dados ocorre com consentimento explícito do titular, dentro do marco regulatório do Open Finance e LGPD.</div></div>
+  </div>
+  <div class="grid-3" style="margin-bottom:1rem">
+    <div class="metric-card"><div class="metric-label">Seções do relatório</div><div class="metric-val">5+</div><div class="card-sub">Dados cadastrais, Score, Movimentação, Perfil de Gastos e mais</div></div>
+    <div class="metric-card"><div class="metric-label">Formas de acesso</div><div class="metric-val">3</div><div class="card-sub">Front-end, API e Enriquecimento de base</div></div>
+    <div class="metric-card"><div class="metric-label">Atualização dos dados</div><div class="metric-val">Real-time</div><div class="card-sub">Transações bancárias via Open Finance</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Componentes do relatório</div>
+    <div class="grid-2" style="margin-top:.5rem">
+      <div class="item-row"><div class="item-icon icon-blue"><i class="ti ti-id-badge" style="font-size:14px;color:#1457a8"></i></div><div class="item-text"><strong>Dados Cadastrais</strong><small>Nome, CPF, telefone, endereço</small></div></div>
+      <div class="item-row"><div class="item-icon icon-blue"><i class="ti ti-chart-donut" style="font-size:14px;color:#1457a8"></i></div><div class="item-text"><strong>Score de crédito</strong><small>Pontuação 0–1000 com classificação de risco</small></div></div>
+      <div class="item-row"><div class="item-icon icon-green"><i class="ti ti-trending-up" style="font-size:14px;color:#16a34a"></i></div><div class="item-text"><strong>Movimentação financeira</strong><small>Renda, despesas e capacidade financeira</small></div></div>
+      <div class="item-row"><div class="item-icon icon-green"><i class="ti ti-wallet" style="font-size:14px;color:#16a34a"></i></div><div class="item-text"><strong>Perfil de gastos</strong><small>Moradia, lazer, dívidas, investimentos</small></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PROBLEMA ===== -->
+<div class="section" id="s-problema">
+  <div class="section-tag">Posicionamento</div>
+  <h1 class="section-title">Problema vs Solução</h1>
+  <p class="section-desc">Qual dor de mercado o Credit Report resolve — e como.</p>
+  <div class="grid-2" style="margin-bottom:1rem">
+    <div class="card" style="border-left:3px solid #dc2626">
+      <div class="card-title" style="color:#dc2626">Os problemas do mercado</div>
+      <div class="item-row"><div class="item-icon icon-red"><i class="ti ti-x" style="font-size:13px;color:#dc2626"></i></div><div class="item-text">Bureaus mostram apenas <strong>inadimplência passada</strong>, não a saúde financeira atual</div></div>
+      <div class="item-row"><div class="item-icon icon-red"><i class="ti ti-x" style="font-size:13px;color:#dc2626"></i></div><div class="item-text">Score é uma <strong>"caixa preta"</strong> — difícil de explicar para comitê</div></div>
+      <div class="item-row"><div class="item-icon icon-red"><i class="ti ti-x" style="font-size:13px;color:#dc2626"></i></div><div class="item-text">Dados desatualizados — <strong>meses de defasagem</strong> em relação ao comportamento real</div></div>
+      <div class="item-row"><div class="item-icon icon-red"><i class="ti ti-x" style="font-size:13px;color:#dc2626"></i></div><div class="item-text">Sem visão de renda comprovada ou <strong>capacidade real de pagamento</strong></div></div>
+      <div class="item-row"><div class="item-icon icon-red"><i class="ti ti-x" style="font-size:13px;color:#dc2626"></i></div><div class="item-text">Alto custo por consulta sem <strong>dados acionáveis</strong> suficientes</div></div>
+    </div>
+    <div class="card" style="border-left:3px solid #16a34a">
+      <div class="card-title" style="color:#16a34a">Como o Credit Report resolve</div>
+      <div class="item-row"><div class="item-icon icon-green"><i class="ti ti-check" style="font-size:13px;color:#16a34a"></i></div><div class="item-text">Dados de <strong>transações bancárias em tempo real</strong> via Open Finance</div></div>
+      <div class="item-row"><div class="item-icon icon-green"><i class="ti ti-check" style="font-size:13px;color:#16a34a"></i></div><div class="item-text">Score explicável com <strong>narrativa de risco</strong> baseada em dados observáveis</div></div>
+      <div class="item-row"><div class="item-icon icon-green"><i class="ti ti-check" style="font-size:13px;color:#16a34a"></i></div><div class="item-text">Atualização contínua com base nos <strong>consentimentos ativos</strong></div></div>
+      <div class="item-row"><div class="item-icon icon-green"><i class="ti ti-check" style="font-size:13px;color:#16a34a"></i></div><div class="item-text">Renda e <strong>capacidade financeira real</strong> visíveis com categoria de gastos</div></div>
+      <div class="item-row"><div class="item-icon icon-green"><i class="ti ti-check" style="font-size:13px;color:#16a34a"></i></div><div class="item-text">Relatório <strong>visual e exportável</strong> — pronto para apresentar em comitê</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Cenário de uso: Análise de crédito para PME</div>
+    <div class="item-row"><div class="item-icon icon-red"><i class="ti ti-building-store" style="font-size:14px;color:#dc2626"></i></div><div class="item-text"><strong>Antes (com bureau):</strong> Analista consulta Serasa, recebe score baixo por dívida antiga quitada. Crédito negado. Cliente saudável perde acesso.</div></div>
+    <div class="item-row"><div class="item-icon icon-green"><i class="ti ti-building-store" style="font-size:14px;color:#16a34a"></i></div><div class="item-text"><strong>Com Klavi:</strong> Analista vê renda de R$15k/mês, despesas de R$12,5k, capacidade financeira de R$2,7k (35%), score 890/1000. Decisão rápida e fundamentada.</div></div>
+  </div>
+</div>
+
+<!-- ===== PERGUNTAS ===== -->
+<div class="section" id="s-perguntas">
+  <div class="section-tag">Valor do produto</div>
+  <h1 class="section-title">Perguntas que o produto responde</h1>
+  <p class="section-desc">Cada análise de crédito envolve decisões críticas. O Credit Report foi desenhado para responder objetivamente.</p>
+  <div class="card">
+    <div class="card-title">Para o analista de crédito</div>
+    <div class="item-row"><div class="item-icon icon-blue"><i class="ti ti-help" style="font-size:14px;color:#1457a8"></i></div><div class="item-text"><strong>Qual é a renda real mensal desse cliente?</strong><small>Via movimentação bancária verificada — sem depender de holerite ou declaração autodeclarada</small></div></div>
+    <div class="item-row"><div class="item-icon icon-blue"><i class="ti ti-help" style="font-size:14px;color:#1457a8"></i></div><div class="item-text"><strong>Qual é a capacidade financeira disponível para uma nova obrigação?</strong><small>Renda - despesas recorrentes = margem real de crédito</small></div></div>
+    <div class="item-row"><div class="item-icon icon-blue"><i class="ti ti-help" style="font-size:14px;color:#1457a8"></i></div><div class="item-text"><strong>Quais são os principais gastos e comprometimentos financeiros?</strong><small>Perfil categorizado: moradia, lazer, dívidas, investimentos</small></div></div>
+    <div class="item-row"><div class="item-icon icon-blue"><i class="ti ti-help" style="font-size:14px;color:#1457a8"></i></div><div class="item-text"><strong>O comportamento financeiro é consistente ou irregular?</strong><small>Histórico de transações e padrão de receita e despesa ao longo do tempo</small></div></div>
+    <div class="item-row"><div class="item-icon icon-blue"><i class="ti ti-help" style="font-size:14px;color:#1457a8"></i></div><div class="item-text"><strong>O score explica por que o risco é baixo, médio ou alto?</strong><small>Score com narrativa explicativa — não apenas um número opaco</small></div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Para gestores e estratégia</div>
+    <div class="item-row"><div class="item-icon icon-warn"><i class="ti ti-help" style="font-size:14px;color:#d97706"></i></div><div class="item-text"><strong>Como enriquecer nossa base de clientes com dados financeiros?</strong><small>Via enriquecimento de base em lote — processamento pela equipe interna da Klavi</small></div></div>
+    <div class="item-row"><div class="item-icon icon-warn"><i class="ti ti-help" style="font-size:14px;color:#d97706"></i></div><div class="item-text"><strong>Quais clientes têm mais margem para produtos adicionais?</strong><small>Visão de capacidade financeira disponível para upsell e cross-sell</small></div></div>
+    <div class="item-row"><div class="item-icon icon-warn"><i class="ti ti-help" style="font-size:14px;color:#d97706"></i></div><div class="item-text"><strong>Como integrar dados de Open Finance ao nosso sistema de crédito?</strong><small>Via API com endpoints documentados e suporte de onboarding</small></div></div>
+  </div>
+</div>
+
+<!-- ===== OFERTA ===== -->
+<div class="section" id="s-oferta">
+  <div class="section-tag">Como contratar e usar</div>
+  <h1 class="section-title">Oferta e formas de acesso</h1>
+  <p class="section-desc">O Credit Report pode ser acessado de três formas distintas, adaptadas ao perfil técnico e operacional de cada cliente.</p>
+  <div class="grid-3" style="margin-bottom:1rem">
+    <div class="access-card featured">
+      <div class="access-num">1</div>
+      <div class="access-title">Front-end (Plataforma Klavi)</div>
+      <div class="access-desc">Acesso direto via interface web. O analista busca o CPF/CNPJ, o cliente consente via Open Finance, e o relatório é gerado na tela — exportável em PDF.</div>
+      <div class="tag-list"><span class="tag">Interface visual</span><span class="tag">Exportar PDF</span><span class="tag">Sem integração técnica</span></div>
+      <div style="margin-top:.75rem;padding-top:.75rem;border-top:1px solid #e8eaed"><div class="card-sub"><strong>Ideal para:</strong> Fintechs sem time dev, analistas individuais, POC</div></div>
+    </div>
+    <div class="access-card">
+      <div class="access-num">2</div>
+      <div class="access-title">API (Integração direta)</div>
+      <div class="access-desc">Integração via REST API. O relatório é retornado como JSON estruturado, consumível em qualquer fluxo de originação de crédito existente.</div>
+      <div class="tag-list"><span class="tag">REST API</span><span class="tag">JSON estruturado</span><span class="tag">Sandbox disponível</span></div>
+      <div style="margin-top:.75rem;padding-top:.75rem;border-top:1px solid #e8eaed"><div class="card-sub"><strong>Ideal para:</strong> Bancos digitais, fintechs com time de tech</div></div>
+    </div>
+    <div class="access-card">
+      <div class="access-num">3</div>
+      <div class="access-title">Enriquecimento de base</div>
+      <div class="access-desc">O cliente envia uma base de CPFs e a equipe interna da Klavi processa o enriquecimento com dados de Open Finance em lote, devolvendo a base enriquecida.</div>
+      <div class="tag-list"><span class="tag">Processamento em lote</span><span class="tag">Time Klavi executa</span><span class="tag">SLA acordado</span></div>
+      <div style="margin-top:.75rem;padding-top:.75rem;border-top:1px solid #e8eaed"><div class="card-sub"><strong>Ideal para:</strong> Carteiras existentes, campanhas de oferta proativa</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Comparativo das modalidades</div>
+    <table class="comp-table" style="margin-top:.5rem">
+      <thead><tr><th>Característica</th><th>Front-end</th><th>API</th><th>Enriquecimento</th></tr></thead>
+      <tbody>
+        <tr><td>Integração técnica necessária</td><td><span class="cross">Não</span></td><td><span class="check">Sim</span></td><td><span class="cross">Não</span></td></tr>
+        <tr><td>Consulta individual</td><td><span class="check">Sim</span></td><td><span class="check">Sim</span></td><td><span class="cross">Não</span></td></tr>
+        <tr><td>Processamento em lote</td><td><span class="cross">Não</span></td><td><span class="partial">Possível</span></td><td><span class="check">Sim</span></td></tr>
+        <tr><td>Automação de fluxo</td><td><span class="cross">Não</span></td><td><span class="check">Sim</span></td><td><span class="cross">Não</span></td></tr>
+        <tr><td>Visualização amigável</td><td><span class="check">Sim</span></td><td><span class="partial">Via implementação</span></td><td><span class="partial">Via arquivo</span></td></tr>
+        <tr><td>Tempo para go-live</td><td>Imediato</td><td>1–4 semanas</td><td>Sob demanda</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== CONCORRÊNCIA ===== -->
+<div class="section" id="s-concorrencia">
+  <div class="section-tag">Análise competitiva</div>
+  <h1 class="section-title">Mapa de concorrentes</h1>
+  <p class="section-desc">Prós e contras da Klavi frente aos principais players do mercado de crédito analytics no Brasil.</p>
+  <div class="card" style="overflow-x:auto">
+    <table class="comp-table">
+      <thead><tr><th>Critério</th><th class="klavi-col">✦ Klavi</th><th>Serasa Experian</th><th>SPC Brasil</th><th>Boa Vista</th><th>Quod</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Fonte dos dados</strong></td><td class="klavi-col"><span class="check">✓</span> Open Finance</td><td><span class="partial">~</span> Histórico negativo</td><td><span class="partial">~</span> Inadimplência</td><td><span class="partial">~</span> Histórico negativo</td><td><span class="partial">~</span> Crédito bancário</td></tr>
+        <tr><td><strong>Atualização</strong></td><td class="klavi-col"><span class="check">✓</span> Tempo real</td><td><span class="cross">✗</span> Meses de defasagem</td><td><span class="cross">✗</span> Meses de defasagem</td><td><span class="cross">✗</span> Meses de defasagem</td><td><span class="partial">~</span> T+1</td></tr>
+        <tr><td><strong>Renda real</strong></td><td class="klavi-col"><span class="check">✓</span> Transacional</td><td><span class="cross">✗</span> Autodeclarada</td><td><span class="cross">✗</span> Não disponível</td><td><span class="cross">✗</span> Não disponível</td><td><span class="cross">✗</span> Não disponível</td></tr>
+        <tr><td><strong>Perfil de gastos</strong></td><td class="klavi-col"><span class="check">✓</span> Categorizado</td><td><span class="cross">✗</span> Não oferece</td><td><span class="cross">✗</span> Não oferece</td><td><span class="cross">✗</span> Não oferece</td><td><span class="cross">✗</span> Não oferece</td></tr>
+        <tr><td><strong>Consentimento LGPD</strong></td><td class="klavi-col"><span class="check">✓</span> Open Finance</td><td><span class="cross">✗</span> Sem consentimento</td><td><span class="cross">✗</span> Sem consentimento</td><td><span class="cross">✗</span> Sem consentimento</td><td><span class="partial">~</span> Parcial</td></tr>
+        <tr><td><strong>Relatório visual</strong></td><td class="klavi-col"><span class="check">✓</span> Dashboard + PDF</td><td><span class="partial">~</span> PDF básico</td><td><span class="cross">✗</span> Dados brutos</td><td><span class="cross">✗</span> Dados brutos</td><td><span class="cross">✗</span> Dados brutos</td></tr>
+        <tr><td><strong>Score explicável</strong></td><td class="klavi-col"><span class="check">✓</span> Narrativa de risco</td><td><span class="cross">✗</span> Caixa-preta</td><td><span class="cross">✗</span> Caixa-preta</td><td><span class="cross">✗</span> Caixa-preta</td><td><span class="cross">✗</span> Caixa-preta</td></tr>
+        <tr><td><strong>Cobertura</strong></td><td class="klavi-col"><span class="partial">~</span> Crescendo</td><td><span class="check">✓</span> 90%+ dos CPFs</td><td><span class="check">✓</span> Alta</td><td><span class="check">✓</span> Alta</td><td><span class="check">✓</span> Alta</td></tr>
+        <tr><td><strong>API disponível</strong></td><td class="klavi-col"><span class="check">✓</span> Sim</td><td><span class="check">✓</span> Sim</td><td><span class="partial">~</span> Limitado</td><td><span class="partial">~</span> Limitado</td><td><span class="check">✓</span> Sim</td></tr>
+        <tr><td><strong>Enriquecimento lote</strong></td><td class="klavi-col"><span class="check">✓</span> Sim</td><td><span class="check">✓</span> Sim</td><td><span class="partial">~</span> Parcial</td><td><span class="partial">~</span> Parcial</td><td><span class="partial">~</span> Parcial</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="grid-2" style="margin-top:1rem">
+    <div class="card">
+      <div class="card-title" style="color:#16a34a">Onde a Klavi vence</div>
+      <div class="item-row"><div class="item-icon icon-green"><i class="ti ti-trophy" style="font-size:13px;color:#16a34a"></i></div><div class="item-text">Única com renda transacional real via Open Finance</div></div>
+      <div class="item-row"><div class="item-icon icon-green"><i class="ti ti-trophy" style="font-size:13px;color:#16a34a"></i></div><div class="item-text">Dados em tempo real — não histórico defasado</div></div>
+      <div class="item-row"><div class="item-icon icon-green"><i class="ti ti-trophy" style="font-size:13px;color:#16a34a"></i></div><div class="item-text">Perfil de gastos categorizado — diferencial exclusivo</div></div>
+      <div class="item-row"><div class="item-icon icon-green"><i class="ti ti-trophy" style="font-size:13px;color:#16a34a"></i></div><div class="item-text">Score explicável com narrativa de risco</div></div>
+      <div class="item-row"><div class="item-icon icon-green"><i class="ti ti-trophy" style="font-size:13px;color:#16a34a"></i></div><div class="item-text">Dados éticos e LGPD-compliant por design</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:#dc2626">Onde precisamos evoluir</div>
+      <div class="item-row"><div class="item-icon icon-red"><i class="ti ti-alert-circle" style="font-size:13px;color:#dc2626"></i></div><div class="item-text">Cobertura menor — depende de adesão ao Open Finance</div></div>
+      <div class="item-row"><div class="item-icon icon-red"><i class="ti ti-alert-circle" style="font-size:13px;color:#dc2626"></i></div><div class="item-text">Marca menos estabelecida que Serasa no mercado</div></div>
+      <div class="item-row"><div class="item-icon icon-red"><i class="ti ti-alert-circle" style="font-size:13px;color:#dc2626"></i></div><div class="item-text">Requer jornada de consentimento (fricção)</div></div>
+      <div class="item-row"><div class="item-icon icon-red"><i class="ti ti-alert-circle" style="font-size:13px;color:#dc2626"></i></div><div class="item-text">Produto novo — menor histórico de casos comprovados</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== DIFERENCIAÇÃO ===== -->
+<div class="section" id="s-diferenciacao">
+  <div class="section-tag">Proposta de valor</div>
+  <h1 class="section-title">Open Finance vs Bureaus tradicionais</h1>
+  <p class="section-desc">A diferença fundamental entre a abordagem da Klavi e a dos bureaus está na origem e natureza dos dados.</p>
+  <div class="card" style="margin-bottom:1rem">
+    <div class="card-title">Como cada abordagem vê o consumidor</div>
+    <div style="display:grid;grid-template-columns:1fr 40px 1fr;gap:.5rem;align-items:center;padding:.5rem 0;border-bottom:1px solid #f3f4f6;margin-bottom:.3rem">
+      <div style="text-align:right;font-size:12px;font-weight:600;color:#6b7280">Bureaus tradicionais</div><div></div><div style="font-size:12px;font-weight:600;color:#6b7280">Klavi (Open Finance)</div>
+    </div>
+    <div class="diff-row"><div class="diff-bureau"><span class="badge badge-red">Histórico negativo</span><br><span style="font-size:11px">Dívidas e inadimplências passadas</span></div><div class="diff-label">Dados base</div><div class="diff-klavi"><span class="badge badge-green">Comportamento real</span><br><span style="font-size:11px">Transações bancárias ativas</span></div></div>
+    <div class="diff-row"><div class="diff-bureau">Meses de defasagem</div><div class="diff-label">Atualização</div><div class="diff-klavi">Tempo real (Open Finance)</div></div>
+    <div class="diff-row"><div class="diff-bureau">Sem visão de renda real</div><div class="diff-label">Renda</div><div class="diff-klavi">Renda transacional verificada</div></div>
+    <div class="diff-row"><div class="diff-bureau">Não disponível</div><div class="diff-label">Gastos</div><div class="diff-klavi">Categorizado (moradia, lazer, dívidas)</div></div>
+    <div class="diff-row"><div class="diff-bureau">Sem consentimento do titular</div><div class="diff-label">LGPD</div><div class="diff-klavi">Consentimento explícito sempre</div></div>
+    <div class="diff-row"><div class="diff-bureau">Score opaco — "caixa preta"</div><div class="diff-label">Score</div><div class="diff-klavi">Score com narrativa explicativa</div></div>
+    <div class="diff-row"><div class="diff-bureau">Visão negativa do cliente</div><div class="diff-label">Perspectiva</div><div class="diff-klavi">Visão completa — risco E oportunidade</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Por que Open Finance é o futuro do crédito</div>
+    <div class="item-row"><div class="item-icon icon-blue"><i class="ti ti-building-bank" style="font-size:14px;color:#1457a8"></i></div><div class="item-text"><strong>Regulação do Bacen (Resolução BCB 32):</strong> Open Finance é obrigatório para instituições financeiras. A base de dados cresce continuamente.</div></div>
+    <div class="item-row"><div class="item-icon icon-blue"><i class="ti ti-users" style="font-size:14px;color:#1457a8"></i></div><div class="item-text"><strong>Desbancarizados e sem histórico:</strong> Clientes sem score nos bureaus aparecem com comportamento transacional positivo — oportunidade para crédito inclusivo.</div></div>
+    <div class="item-row"><div class="item-icon icon-blue"><i class="ti ti-shield" style="font-size:14px;color:#1457a8"></i></div><div class="item-text"><strong>Confiança do consumidor:</strong> O dado pertence ao cliente. Consentimento explícito cria uma relação de confiança diferente da consulta passiva em bureaus.</div></div>
+    <div class="item-row"><div class="item-icon icon-green"><i class="ti ti-trending-up" style="font-size:14px;color:#16a34a"></i></div><div class="item-text"><strong>Cobertura crescente:</strong> O Open Finance no Brasil já supera 40 milhões de consentimentos ativos e cresce mês a mês.</div></div>
+  </div>
+</div>
+
+<!-- ===== SWOT ===== -->
+<div class="section" id="s-swot">
+  <div class="section-tag">Análise estratégica</div>
+  <h1 class="section-title">SWOT — Klavi Credit Report</h1>
+  <p class="section-desc">Fortalezas, fraquezas, oportunidades e ameaças para orientar o posicionamento comercial.</p>
+  <div class="swot-grid">
+    <div class="swot-card swot-s"><div class="swot-title">✅ Fortalezas</div><ul class="swot-list"><li>Único com dados reais de Open Finance</li><li>Renda transacional verificada — diferencial exclusivo</li><li>Relatório visual e exportável (PDF)</li><li>Score com narrativa explicável</li><li>Consentimento LGPD — dados éticos e defensáveis</li><li>3 modalidades de acesso</li><li>Dados em tempo real</li></ul></div>
+    <div class="swot-card swot-w"><div class="swot-title">⚠️ Fraquezas</div><ul class="swot-list"><li>Requer consentimento do cliente (fricção)</li><li>Cobertura limitada a aderentes do Open Finance</li><li>Marca menos conhecida que Serasa e SPC</li><li>Produto novo — poucos casos consolidados</li><li>Dependência da infraestrutura do Bacen</li><li>Pode não cobrir clientes sem conta bancária</li></ul></div>
+    <div class="swot-card swot-o"><div class="swot-title">🚀 Oportunidades</div><ul class="swot-list"><li>Open Finance cresce 40M+ consentimentos no Brasil</li><li>Regulação favorável (Bacen exige participação)</li><li>Demanda por crédito inclusivo</li><li>Fintechs buscam alternativas aos bureaus</li><li>Crédito para MEI e PME com dados confiáveis</li><li>Upsell para clientes Klavi existentes</li><li>Enriquecimento de carteiras — sem concorrente claro</li></ul></div>
+    <div class="swot-card swot-t"><div class="swot-title">🔴 Ameaças</div><ul class="swot-list"><li>Serasa e Boa Vista podem lançar produtos de Open Finance</li><li>Mudanças regulatórias no Open Finance</li><li>Resistência cultural ao compartilhamento de dados</li><li>Grandes bancos construindo soluções próprias</li><li>Startups internacionais entrando no mercado</li><li>Baixa percepção de valor vs preço</li></ul></div>
+  </div>
+</div>
+
+<!-- ===== SEGMENTOS ===== -->
+<div class="section" id="s-segmentos">
+  <div class="section-tag">Mercado-alvo</div>
+  <h1 class="section-title">Seleção de segmentos</h1>
+  <p class="section-desc">Quem deve ser priorizado pelo time comercial — maior fit e propensão a adotar Open Finance como base de crédito.</p>
+  <p style="font-size:12px;font-weight:600;color:#1457a8;margin-bottom:.5rem">🔵 Alta prioridade</p>
+  <div class="grid-3" style="margin-bottom:1rem">
+    <div class="seg-card"><div class="seg-name">🏦 Fintechs de crédito</div><div class="seg-why">Nativas digitais, buscam dados alternativos. Alta propensão ao Open Finance. Integração via API.</div></div>
+    <div class="seg-card"><div class="seg-name">👥 Cooperativas de crédito</div><div class="seg-why">Precisam de visão completa do associado. Acesso via front-end ideal para o perfil.</div></div>
+    <div class="seg-card"><div class="seg-name">💳 Crédito consignado</div><div class="seg-why">Precisam validar renda real. Capacidade financeira é o dado central da concessão.</div></div>
+  </div>
+  <p style="font-size:12px;font-weight:600;color:#d97706;margin-bottom:.5rem">🟡 Média prioridade</p>
+  <div class="grid-3" style="margin-bottom:1rem">
+    <div class="seg-card"><div class="seg-name">🛒 Varejistas com crédito próprio</div><div class="seg-why">Enriquecimento de base para scoring da carteira existente.</div></div>
+    <div class="seg-card"><div class="seg-name">🏠 Imobiliárias e construtoras</div><div class="seg-why">Comprometimento de renda é critério central para crédito habitacional.</div></div>
+    <div class="seg-card"><div class="seg-name">📈 Gestoras e factoring</div><div class="seg-why">Precisam qualificar portfólio e antecipar risco de inadimplência.</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Critérios de qualificação do lead</div>
+    <div class="item-row"><div class="item-icon icon-green"><i class="ti ti-check" style="font-size:13px;color:#16a34a"></i></div><div class="item-text"><strong>Faz concessão de crédito ativa</strong> — não apenas consulta, mas decide aprovação/reprova</div></div>
+    <div class="item-row"><div class="item-icon icon-green"><i class="ti ti-check" style="font-size:13px;color:#16a34a"></i></div><div class="item-text"><strong>Volume mínimo de análises</strong> — ao menos 500 consultas/mês para justificar o ROI</div></div>
+    <div class="item-row"><div class="item-icon icon-green"><i class="ti ti-check" style="font-size:13px;color:#16a34a"></i></div><div class="item-text"><strong>Interesse em qualidade de dados</strong> — não apenas preço mínimo de consulta</div></div>
+    <div class="item-row"><div class="item-icon icon-green"><i class="ti ti-check" style="font-size:13px;color:#16a34a"></i></div><div class="item-text"><strong>Aberto ao Open Finance</strong> — empresa já participante ou com jornada de consentimento</div></div>
+  </div>
+</div>
+
+<!-- ===== PERSONA ===== -->
+<div class="section" id="s-persona">
+  <div class="section-tag">Perfis de comprador</div>
+  <h1 class="section-title">Personas</h1>
+  <p class="section-desc">Quem decide, quem usa e quem influencia a compra do Credit Report.</p>
+  <div class="grid-2">
+    <div class="persona-card">
+      <div class="persona-avatar" style="background:#eff6ff;color:#1457a8">MA</div>
+      <div class="persona-name">Marcos Andrade</div>
+      <div class="persona-role">Gerente de Crédito — Fintech ou cooperativa<br><span class="badge badge-blue" style="font-size:10px;margin-top:4px">Usuário principal</span></div>
+      <div class="persona-sec">Dores</div>
+      <div class="persona-item">• Analisa 50–200 propostas/mês com dados insuficientes</div>
+      <div class="persona-item">• Score não explica o risco para o comitê</div>
+      <div class="persona-item">• Pressão para reduzir inadimplência sem travar aprovações</div>
+      <div class="persona-sec">O que valoriza</div>
+      <div class="persona-item">• Dados que ele consegue explicar ao diretor</div>
+      <div class="persona-item">• Relatório visual pronto para apresentar</div>
+      <div class="persona-sec">Como vender</div>
+      <div class="persona-item">• Demo com caso real da carteira dele</div>
+      <div class="persona-item">• Mostrar score + narrativa de risco na tela</div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-avatar" style="background:#f0fdf4;color:#166534">CF</div>
+      <div class="persona-name">Camila Ferreira</div>
+      <div class="persona-role">CDO / Head de Produto — Fintech<br><span class="badge badge-green" style="font-size:10px;margin-top:4px">Decisora técnica</span></div>
+      <div class="persona-sec">Dores</div>
+      <div class="persona-item">• Quer Open Finance sem desenvolver internamente</div>
+      <div class="persona-item">• Precisa de API robusta com sandbox</div>
+      <div class="persona-item">• Preocupada com LGPD e compliance</div>
+      <div class="persona-sec">O que valoriza</div>
+      <div class="persona-item">• API bem documentada com sandbox para testar</div>
+      <div class="persona-item">• SLA de disponibilidade claro</div>
+      <div class="persona-sec">Como vender</div>
+      <div class="persona-item">• Acesso ao sandbox imediato</div>
+      <div class="persona-item">• Reunião técnica com o time Klavi</div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-avatar" style="background:#fffbeb;color:#92400e">RL</div>
+      <div class="persona-name">Ricardo Lima</div>
+      <div class="persona-role">Diretor Financeiro / CFO<br><span class="badge badge-warn" style="font-size:10px;margin-top:4px">Decisor de budget</span></div>
+      <div class="persona-sec">Dores</div>
+      <div class="persona-item">• Inadimplência acima do esperado na carteira</div>
+      <div class="persona-item">• Custo de análise vs qualidade das decisões</div>
+      <div class="persona-item">• Crescer carteira sem aumentar risco</div>
+      <div class="persona-sec">O que valoriza</div>
+      <div class="persona-item">• ROI claro: inadimplência reduzida x custo</div>
+      <div class="persona-item">• Casos de uso com números reais</div>
+      <div class="persona-sec">Como vender</div>
+      <div class="persona-item">• Business case com projeção de impacto</div>
+      <div class="persona-item">• Referências de clientes similares</div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-avatar" style="background:#fef2f2;color:#991b1b">BI</div>
+      <div class="persona-name">Beatriz Inoue</div>
+      <div class="persona-role">Analista de BI / Data Analytics<br><span class="badge badge-red" style="font-size:10px;margin-top:4px">Influenciadora técnica</span></div>
+      <div class="persona-sec">Dores</div>
+      <div class="persona-item">• Dados de bureau são rasos para modelos de ML</div>
+      <div class="persona-item">• Quer features transacionais para credit scoring</div>
+      <div class="persona-item">• Demora para obter dados de renda confiáveis</div>
+      <div class="persona-sec">O que valoriza</div>
+      <div class="persona-item">• Dados ricos e estruturados via API (JSON)</div>
+      <div class="persona-item">• Histórico transacional para treino de modelos</div>
+      <div class="persona-sec">Como vender</div>
+      <div class="persona-item">• Mostrar estrutura do JSON de resposta</div>
+      <div class="persona-item">• Exemplos de features para credit scoring</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PITCH ===== -->
+<div class="section" id="s-pitch">
+  <div class="section-tag">Argumento comercial</div>
+  <h1 class="section-title">Pitch de venda</h1>
+  <p class="section-desc">Mensagens centrais para cada contexto de abordagem comercial.</p>
+  <div class="pitch-box">
+    <h3>Elevator Pitch (30 segundos)</h3>
+    <p>"A Klavi entrega um Relatório de Crédito completo baseado em Open Finance — não em histórico negativo. Sua equipe vê a renda real, o perfil de gastos e a capacidade financeira do cliente em tempo real, com score explicável e relatório visual. Você toma decisões de crédito mais inteligentes em menos tempo, com dados que os bureaus tradicionais simplesmente não têm."</p>
+  </div>
+  <div class="card">
+    <div class="card-title">Para gerentes de crédito (usuário final)</div>
+    <div class="item-row"><div class="item-icon icon-blue"><i class="ti ti-quote" style="font-size:14px;color:#1457a8"></i></div><div class="item-text">"Com o Credit Report da Klavi, você para de adivinhar a renda do cliente e começa a ver exatamente quanto ele recebe, o que gasta, e quanto sobra para pagar uma parcela. Tudo com um relatório que você consegue levar pro comitê sem precisar explicar de onde veio o número."</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Para diretores e CFOs (ROI)</div>
+    <div class="item-row"><div class="item-icon icon-blue"><i class="ti ti-quote" style="font-size:14px;color:#1457a8"></i></div><div class="item-text">"Cada ponto percentual de inadimplência evitado vale muito mais do que o custo do relatório. A Klavi te dá visibilidade da capacidade financeira real — não só do histórico negativo — para que você aprove quem deve aprovar e recuse quem vai dar prejuízo."</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Para times de tecnologia (CTOs e CDOs)</div>
+    <div class="item-row"><div class="item-icon icon-blue"><i class="ti ti-quote" style="font-size:14px;color:#1457a8"></i></div><div class="item-text">"Você não precisa construir a jornada de Open Finance do zero. A Klavi já tem a infraestrutura, o consentimento, o parsing dos dados e a API estruturada pronta. Integra em semanas e começa a usar dados transacionais reais no seu modelo de crédito."</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Frases de impacto para uso rápido</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:.5rem">
+      <span class="badge badge-blue">"Score que você consegue explicar"</span>
+      <span class="badge badge-blue">"Renda real, não autodeclarada"</span>
+      <span class="badge badge-blue">"Dados de hoje, não de meses atrás"</span>
+      <span class="badge badge-blue">"Do consentimento ao relatório em minutos"</span>
+      <span class="badge badge-blue">"Open Finance transformado em decisão de crédito"</span>
+      <span class="badge badge-blue">"Aprove quem merece. Recuse quem vai inadimplir"</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CAMPANHA ===== -->
+<div class="section" id="s-campanha">
+  <div class="section-tag">Go-to-market</div>
+  <h1 class="section-title">Plano de campanha GTM</h1>
+  <p class="section-desc">Estratégia de lançamento e posicionamento do Credit Report no mercado.</p>
+  <div class="grid-3" style="margin-bottom:1rem">
+    <div class="camp-card"><div class="camp-phase">Fase 1 — Semanas 1–4</div><div class="camp-name">🔥 Awareness &amp; Early Access</div><div class="camp-tactics">Webinar de lançamento. LinkedIn orgânico com cases. Acesso beta para 10 clientes âncora. Newsletter para base existente da Klavi.</div></div>
+    <div class="camp-card"><div class="camp-phase">Fase 2 — Mês 2–3</div><div class="camp-name">🤝 Conversão &amp; Social Proof</div><div class="camp-tactics">Cases publicados dos clientes âncora. Demos personalizadas por segmento. Parceria com ABCD e ACREFI. LinkedIn Ads para diretores de crédito.</div></div>
+    <div class="camp-card"><div class="camp-phase">Fase 3 — Mês 4+</div><div class="camp-name">📈 Escala &amp; Expansão</div><div class="camp-tactics">Programa de indicação B2B. Upsell para clientes Klavi existentes. Relatório de mercado Open Finance. Eventos setoriais.</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Canais prioritários</div>
+    <div class="item-row"><div class="item-icon icon-blue"><i class="ti ti-brand-linkedin" style="font-size:14px;color:#1457a8"></i></div><div class="item-text"><strong>LinkedIn Outbound:</strong> Abordagem direta a gerentes de crédito, diretores e CDOs de fintechs e cooperativas</div></div>
+    <div class="item-row"><div class="item-icon icon-green"><i class="ti ti-users" style="font-size:14px;color:#16a34a"></i></div><div class="item-text"><strong>Base existente Klavi:</strong> Clientes de outros produtos como ponto de entrada para demo do Credit Report</div></div>
+    <div class="item-row"><div class="item-icon icon-blue"><i class="ti ti-presentation" style="font-size:14px;color:#1457a8"></i></div><div class="item-text"><strong>Eventos:</strong> ABCD, FEBRABAN Tech, Semana COOP, Fintouch — posicionamento como autoridade em Open Finance Credit</div></div>
+    <div class="item-row"><div class="item-icon icon-warn"><i class="ti ti-mail" style="font-size:14px;color:#d97706"></i></div><div class="item-text"><strong>E-mail marketing segmentado:</strong> Sequência por persona — abordagens distintas para analistas, gestores e tecnologia</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Mensagem central da campanha</div>
+    <div class="highlight-box">
+      <div class="hl-text">"Conheça seu cliente de verdade. Crédito baseado em comportamento, não em histórico."</div>
+      <div class="hl-sub">Tagline principal para materiais de marketing</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ROADMAP ===== -->
+<div class="section" id="s-roadmap">
+  <div class="section-tag">Evolução do produto</div>
+  <h1 class="section-title">Roadmap evolutivo</h1>
+  <p class="section-desc">O que já está disponível, o que vem a seguir e o que está planejado para o futuro.</p>
+  <div class="card">
+    <div class="roadmap-track">
+      <div class="roadmap-item"><div class="roadmap-dot dot-done"></div><div class="roadmap-phase">✅ Disponível agora</div><div class="roadmap-feat">Relatório de Crédito v1.0</div><div class="roadmap-desc">Dados cadastrais, Score (0–1000), Movimentação Financeira, Perfil de Gastos categorizado, Exportação PDF, Acesso via front-end</div></div>
+      <div class="roadmap-item"><div class="roadmap-dot dot-done"></div><div class="roadmap-phase">✅ Disponível agora</div><div class="roadmap-feat">API de Consulta</div><div class="roadmap-desc">Endpoint REST para integração, JSON estruturado com todos os componentes, ambiente sandbox para testes</div></div>
+      <div class="roadmap-item"><div class="roadmap-dot dot-done"></div><div class="roadmap-phase">✅ Disponível agora</div><div class="roadmap-feat">Enriquecimento de Base</div><div class="roadmap-desc">Processamento em lote pela equipe interna da Klavi, entrega de base enriquecida com dados Open Finance</div></div>
+      <div class="roadmap-item"><div class="roadmap-dot dot-next"></div><div class="roadmap-phase">🟡 Próximos meses</div><div class="roadmap-feat">Score v2 com modelo atualizado</div><div class="roadmap-desc">Modelo refinado com mais variáveis comportamentais, melhor separação de risco por segmento</div></div>
+      <div class="roadmap-item"><div class="roadmap-dot dot-next"></div><div class="roadmap-phase">🟡 Próximos meses</div><div class="roadmap-feat">Alertas de mudança de comportamento</div><div class="roadmap-desc">Notificações quando o perfil financeiro muda significativamente — antecipa inadimplência</div></div>
+      <div class="roadmap-item"><div class="roadmap-dot dot-next"></div><div class="roadmap-phase">🟡 Próximos meses</div><div class="roadmap-feat">Comparativo temporal (12 meses)</div><div class="roadmap-desc">Evolução financeira do cliente ao longo do tempo — tendência de risco crescente ou decrescente</div></div>
+      <div class="roadmap-item"><div class="roadmap-dot dot-future"></div><div class="roadmap-phase">⬜ Futuro</div><div class="roadmap-feat">Relatório para PJ (CNPJ)</div><div class="roadmap-desc">Expansão para pessoa jurídica — análise de fluxo de caixa e saúde financeira empresarial</div></div>
+      <div class="roadmap-item"><div class="roadmap-dot dot-future"></div><div class="roadmap-phase">⬜ Futuro</div><div class="roadmap-feat">Integração com motor de decisão de crédito</div><div class="roadmap-desc">Credit Report como input direto de políticas de crédito automatizadas — do dado à decisão em um fluxo</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Q&A ===== -->
+<div class="section" id="s-qa">
+  <div class="section-tag">Argumentação comercial</div>
+  <h1 class="section-title">Objeções frequentes &amp; Q&amp;A</h1>
+  <p class="section-desc">Como responder às dúvidas e resistências mais comuns durante negociações.</p>
+  <div class="card">
+    <div class="card-title">Objeções de adoção</div>
+    <div class="qa-item"><div class="qa-q"><span class="badge badge-red" style="flex-shrink:0">Objeção</span>"Já usamos Serasa há anos. Por que mudar?"</div><div class="qa-a">Não precisa substituir — a Klavi complementa. O Serasa mostra o passado de inadimplência; a Klavi mostra o comportamento financeiro atual. Juntos, a decisão de crédito fica muito mais precisa.</div></div>
+    <div class="qa-item"><div class="qa-q"><span class="badge badge-red" style="flex-shrink:0">Objeção</span>"Open Finance é novo, não tenho confiança ainda."</div><div class="qa-a">Open Finance é regulado pelo Banco Central do Brasil desde 2021 e já supera 40 milhões de consentimentos ativos. A Klavi opera com certificação e conformidade total com as normas do Bacen e LGPD.</div></div>
+    <div class="qa-item"><div class="qa-q"><span class="badge badge-red" style="flex-shrink:0">Objeção</span>"E se o cliente não der consentimento?"</div><div class="qa-a">O consentimento é parte do processo — e isso é uma vantagem. O cliente que consente demonstra proatividade. Para clientes que recusam, o relatório de bureau ainda é alternativa. O Credit Report maximiza a qualidade nos casos com consentimento.</div></div>
+    <div class="qa-item"><div class="qa-q"><span class="badge badge-red" style="flex-shrink:0">Objeção</span>"A cobertura é menor que os bureaus tradicionais."</div><div class="qa-a">Verdade para clientes sem conta bancária. Mas para quem tem conta, a cobertura cresce mensalmente e o dado é muito mais rico. Para clientes sem histórico negativo nos bureaus — frequentemente negados sem motivo — a Klavi pode ser a única forma de aprovar com segurança.</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Perguntas técnicas frequentes</div>
+    <div class="qa-item"><div class="qa-q"><span class="badge badge-blue" style="flex-shrink:0">Pergunta</span>"Qual é o SLA de disponibilidade da API?"</div><div class="qa-a">A Klavi opera com SLA de 99,5% de disponibilidade. Temos ambientes de produção e staging separados, com monitoramento contínuo. O sandbox está disponível 24/7 para testes.</div></div>
+    <div class="qa-item"><div class="qa-q"><span class="badge badge-blue" style="flex-shrink:0">Pergunta</span>"Quanto tempo leva para gerar um relatório?"</div><div class="qa-a">Após o consentimento do cliente via Open Finance, o relatório é gerado em menos de 60 segundos na maioria dos casos. O tempo pode variar conforme a quantidade de instituições conectadas.</div></div>
+    <div class="qa-item"><div class="qa-q"><span class="badge badge-blue" style="flex-shrink:0">Pergunta</span>"Como funciona a precificação?"</div><div class="qa-a">O modelo é por consulta ou por pacote de volume mensal. Existe também modelo para enriquecimento de base por volume de registros. O time comercial elabora proposta personalizada com base no volume estimado.</div></div>
+    <div class="qa-item"><div class="qa-q"><span class="badge badge-blue" style="flex-shrink:0">Pergunta</span>"Quais bancos estão disponíveis no Open Finance?"</div><div class="qa-a">Todas as instituições com mais de R$1 bilhão em carteira de crédito são obrigadas a participar (Res. BCB 32). Isso inclui Itaú, Bradesco, BB, Caixa, Nubank, Inter e centenas de outras. A lista completa está no site do Bacen e cresce mensalmente.</div></div>
+  </div>
+</div>
+
+</main>
+</div>
+<script>
+function show(id,el){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  el.classList.add('active');
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
